@@ -1,9 +1,12 @@
-import { sendUdpCommand } from "@/utils/sendUDPCommand";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -16,17 +19,13 @@ type Artisan = {
   name: string;
   trade: string;
   portraitPath: string;
-  description: string;
-  videoCommands?: {
-    bio?: string;
-    craft?: string;
-  };
 };
 
 type Props = {
   artisan: Artisan;
   index: number;
   animationValue: SharedValue<number>;
+  onAskPress: () => void;
 };
 
 const portraitMap: Record<string, any> = {
@@ -34,53 +33,19 @@ const portraitMap: Record<string, any> = {
   // add portrait mappings here
 };
 
-// Configuration constants for easy ratio adjustments
 const LAYOUT_CONFIG = {
-  portraitRatio: 0.65, // % of card height
-  contentRatio: 0.35, // % of card height
-  titleRatio: 0.4, // % of content section
-  descriptionRatio: 0.2, // % of content section
-  buttonsRatio: 0.4, // % of content section
+  portraitRatio: 0.65,
+  contentRatio: 0.35,
+  titleRatio: 0.4,
+  descriptionRatio: 0.2,
+  buttonsRatio: 0.4,
 };
 
-export default function ArtisanCard({ artisan, index, animationValue }: Props) {
-  const router = useRouter();
-
-  const handlePress = () => {
-    // for handling pressing on the card and going to another screen.
-    // not needed for bio app, add for Q&A
-  };
-
-  const handleVideoPress = async (videoType: "bio" | "craft") => {
-    const command = artisan.videoCommands?.[videoType];
-
-    if (!command) {
-      console.warn(`⚠️ No command configured for ${videoType} video.`);
-      return;
-    }
-
-    console.log(`Command to send: "${command}"`);
-
-    try {
-      // Load IP and port from AsyncStorage
-      const ip =
-        (await AsyncStorage.getItem("museum_ip_address")) ?? "192.168.1.100";
-      const port = (await AsyncStorage.getItem("museum_port")) ?? "8080";
-
-      console.log(`Loaded IP and port: ${ip}:${port}`);
-
-      await sendUdpCommand({
-        ip,
-        port,
-        message: command,
-      });
-
-      console.log("✅ UDP command sent successfully");
-    } catch (err) {
-      console.error("❌ Failed to send UDP command:", err);
-    }
-  };
-
+export default function ArtisanCard({
+  artisan,
+  animationValue,
+  onAskPress,
+}: Props) {
   const imageSource =
     artisan.portraitPath && portraitMap[artisan.portraitPath]
       ? portraitMap[artisan.portraitPath]
@@ -101,12 +66,7 @@ export default function ArtisanCard({ artisan, index, animationValue }: Props) {
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
-      <TouchableOpacity
-        style={styles.card}
-        onPress={handlePress}
-        activeOpacity={0.95}
-      >
-        {/* Portrait Section */}
+      <View style={styles.card}>
         <View style={styles.portraitDividerTop} />
         <View
           style={[
@@ -114,21 +74,16 @@ export default function ArtisanCard({ artisan, index, animationValue }: Props) {
             { height: `${LAYOUT_CONFIG.portraitRatio * 100}%` },
           ]}
         >
-          <Image
-            source={imageSource}
-            style={styles.portrait}
-            resizeMode="cover"
-          />
+          <Image source={imageSource} style={styles.portrait} resizeMode="cover" />
         </View>
         <View style={styles.portraitDividerBottom} />
-        {/* Content Section */}
+
         <View
           style={[
             styles.contentSection,
             { height: `${LAYOUT_CONFIG.contentRatio * 100}%` },
           ]}
         >
-          {/* Name and Trade */}
           <View
             style={[
               styles.titleSection,
@@ -154,9 +109,6 @@ export default function ArtisanCard({ artisan, index, animationValue }: Props) {
             </Text>
           </View>
 
-          {/* Description */}
-
-          {/* Video Buttons */}
           <View
             style={[
               styles.buttonSection,
@@ -164,25 +116,16 @@ export default function ArtisanCard({ artisan, index, animationValue }: Props) {
             ]}
           >
             <TouchableOpacity
-              style={[styles.videoButton, styles.introButton]}
-              onPress={() => handleVideoPress("bio")}
-              activeOpacity={0.8}
+              style={[styles.videoButton, styles.askButton]}
+              onPress={onAskPress}
+              activeOpacity={0.85}
             >
-              
-              <Text style={styles.buttonBioText}>Play Bio</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.videoButton, styles.craftButton]}
-              onPress={() => handleVideoPress("craft")}
-              activeOpacity={0.8}
-            >
-              
-              <Text style={styles.buttonCraftText}>See Their Craft</Text>
+              <Ionicons name="chatbubble-ellipses" size={34} color="#39505D" style={styles.buttonIcon} />
+              <Text style={styles.askText}>Ask {artisan.name} a Question</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </Animated.View>
   );
 }
@@ -190,9 +133,9 @@ export default function ArtisanCard({ artisan, index, animationValue }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 20,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
   },
   card: {
     width: "100%",
@@ -201,19 +144,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#9C8374",
     borderRadius: 16,
-    overflow: "hidden", // <-- key addition
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.35,
     shadowRadius: 19.84,
   },
-
-  divider: {
-    width: "30%",
-    height: 2,
-    backgroundColor: "#9C8374",
-    marginVertical: 6,
-    alignSelf: "center",
+  portraitDividerTop: {
+    height: 15,
+    width: "100%",
+    backgroundColor: "#C37E5D",
   },
   portraitDividerBottom: {
     height: 15,
@@ -221,13 +161,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#A0B8BD",
     marginTop: -1,
   },
-  portraitDividerTop: {
-    height: 15,
-    width: "100%",
-    backgroundColor: "#C37E5D",
-    marginTop: -1,
-  },
-
   portraitSection: {
     width: "100%",
     overflow: "hidden",
@@ -267,25 +200,19 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 1,
   },
-  descriptionSection: {
-    paddingVertical: 8,
-    alignItems: "center",
-  },
-  description: {
-    fontSize: 16,
-    fontFamily: "AcuminPro-Regular",
-    color: "#2C2B28",
-    lineHeight: 22,
-    textAlign: "center",
+  divider: {
+    width: "30%",
+    height: 2,
+    backgroundColor: "#9C8374",
+    marginVertical: 6,
+    alignSelf: "center",
   },
   buttonSection: {
-    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    gap: 12,
     marginTop: 16,
   },
   videoButton: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -293,40 +220,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingVertical: 14,
     paddingHorizontal: 24,
-    position: "relative", // Required for absolute icon
   },
-  buttonIconAbsolute: {
-    position: "absolute",
-    right: 30,
+  askButton: {
+    width: "60%",
+    height: "80%",
+    backgroundColor: "#E1EDF0",
+    borderColor: "#A0B8BD",
   },
-  introButton: {
-    borderColor: "#A0B8BD", // Cool blue tone
-    backgroundColor: "#d8e7ed", // Soft blue-tinted ivory
-  },
-  craftButton: {
-    borderColor: "#C37E5D", // Warm terracotta
-    backgroundColor: "#F3D5C0", // Subtle warm ivory
-  },
-  buttonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   buttonIcon: {
     marginRight: 12,
   },
-
-  buttonBioText: {
+  askText: {
+    fontSize: 38,
+    fontFamily: "FreightDisp-Bold",
     color: "#39505D",
-    fontSize: 50,
-    fontFamily: "FreightDisp-Bold",
-    textAlign: "center",
-  },
-  buttonCraftText: {
-    color: "#634334",
-    fontSize: 50,
-    fontFamily: "FreightDisp-Bold",
     textAlign: "center",
   },
 });

@@ -1,7 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+} from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carousel, {
   ICarouselInstance,
@@ -11,6 +17,7 @@ import Carousel, {
 import artisans from "../assets/artisans.json";
 import ArtisanCard from "../components/ArtisanCard";
 import HiddenMaintenanceTrigger from "../components/HiddenMaintenanceTrigger";
+import QuestionOverlay from "../components/QuestionOverlay";
 
 export default function HomeScreen() {
   const ref = React.useRef<ICarouselInstance>(null);
@@ -18,7 +25,8 @@ export default function HomeScreen() {
   const progress = useSharedValue<number>(0);
   const router = useRouter();
 
-  const [useGradientBackground, setUseGradientBackground] = useState(false); // ← toggle
+  const [useGradientBackground, setUseGradientBackground] = useState(false);
+  const [selectedArtisan, setSelectedArtisan] = useState<any | null>(null);
 
   const background = require("../assets/images/CTA_QA_Home_BG.png");
   const CARD_WIDTH = width;
@@ -41,7 +49,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      {/* BACKGROUND */}
       {useGradientBackground ? (
         <LinearGradient
           colors={["#F8F5F0", "#D9C2AA"]}
@@ -50,9 +57,7 @@ export default function HomeScreen() {
       ) : (
         <Image source={background} style={styles.backgroundImage} />
       )}
-      
 
-      {/* CAROUSEL */}
       <Carousel
         ref={ref}
         data={artisans}
@@ -76,6 +81,7 @@ export default function HomeScreen() {
             artisan={item}
             index={index}
             animationValue={animationValue}
+            onAskPress={() => setSelectedArtisan(item)}
           />
         )}
       />
@@ -97,6 +103,13 @@ export default function HomeScreen() {
         onPress={onPressPagination}
       />
 
+      {selectedArtisan && (
+        <QuestionOverlay
+          artisan={selectedArtisan}
+          onClose={() => setSelectedArtisan(null)}
+        />
+      )}
+
       <HiddenMaintenanceTrigger
         onActivate={() => router.push("/maintenance")}
       />
@@ -112,10 +125,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "cover",
-    transform: [
-      { translateX: -300 },
-      { translateY: -2000 },
-    ],
+    transform: [{ translateX: -300 }, { translateY: -2000 }],
   },
   toggleButton: {
     position: "absolute",

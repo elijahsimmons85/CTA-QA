@@ -1,0 +1,324 @@
+{
+  "Amy Erickson": {
+    "id": "AE",
+    "questions": [
+      {
+        "key": "AE-Q1",
+        "text": "Who are you? Introduce yourself."
+      },
+      {
+        "key": "AE-Q2",
+        "text": "What got you started in your craft?"
+      },
+      {
+        "key": "AE-Q3",
+        "text": "Why do so many gear makers come from ranching backgrounds?"
+      },
+      {
+        "key": "AE-Q4",
+        "text": "How did necessity play a role in your early work?"
+      },
+      {
+        "key": "AE-Q5",
+        "text": "Why is function more important than looks in your craft?"
+      },
+      {
+        "key": "AE-Q5A",
+        "text": "How does function effect your horse?"
+      },
+      {
+        "key": "AE-Q6",
+        "text": "How has the culture around mentorship changed in your industry?"
+      },
+      {
+        "key": "AE-Q7",
+        "text": "Why is handcrafted gear better than mass-produced gear?"
+      },
+      {
+        "key": "AE-Q8",
+        "text": "What does being a cowboy or cowgirl mean to you?"
+      },
+      {
+        "key": "AE-Q9",
+        "text": "Are there still real cowboy jobs today?"
+      },
+      {
+        "key": "AE-Q10",
+        "text": "Who do you make your gear for?"
+      },
+      {
+        "key": "AE-Q11",
+        "text": "What do bits and spurs actually do for the rider and horse?"
+      },
+      {
+        "key": "AE-Q12",
+        "text": "What was it like learning one-on-one from Ernie Marsh?"
+      },
+      {
+        "key": "AE-Q12A",
+        "text": "What does it take to get involved?"
+      },
+      {
+        "key": "AE-Q13",
+        "text": "Why are more western craftsmen willing to teach now?"
+      },
+      {
+        "key": "AE-Q14",
+        "text": "What do you hope the future looks like for this craft?"
+      },
+      {
+        "key": "AE-Q15",
+        "text": "Why is it important to treat your craft like a business?"
+      },
+      {
+        "key": "AE-Q16",
+        "text": "What was growing up on a ranch like for you?"
+      },
+      {
+        "key": "AE-Q17",
+        "text": "Why aren\u2019t more young people staying in ranching?"
+      },
+      {
+        "key": "AE-Q18",
+        "text": "Why do you want to teach your craft to others?"
+      }
+    ]
+  },
+  "Brook Briddle": {
+    "id": "BB",
+    "questions": [
+      {
+        "key": "BB-Q1",
+        "text": "What got you started in cowboy hat making?"
+      },
+      {
+        "key": "BB-Q2",
+        "text": "When did you realize you had a natural talent for hat work?"
+      },
+      {
+        "key": "BB-Q3",
+        "text": "What makes a cowboy hat more than just a fashion piece?"
+      },
+      {
+        "key": "BB-Q4",
+        "text": "What does a hat have to do with someone's character?"
+      },
+      {
+        "key": "BB-Q5",
+        "text": "What\u2019s the difference between a custom hat and a store-bought one?"
+      },
+      {
+        "key": "BB-Q6",
+        "text": "What is the best felting material for a cowboy hat?"
+      },
+      {
+        "key": "BB-Q7",
+        "text": "How have movies and pop culture shaped the cowboy hat's popularity?"
+      },
+      {
+        "key": "BB-Q8",
+        "text": "Why do you think the cowboy hat will never disappear?"
+      },
+      {
+        "key": "BB-Q9",
+        "text": "How did working on a ranch influence how you build hats?"
+      },
+      {
+        "key": "BB-Q10",
+        "text": "What does it mean to leave a legacy through Powder River Hat Company?"
+      },
+      {
+        "key": "BB-Q11",
+        "text": "Do you consider yourself a master hatter?"
+      }
+    ]
+  },
+  "Tia Watson": {
+    "id": "TW",
+    "questions": [
+      {
+        "key": "TW-Q1",
+        "text": "What is a cinch and why is it so important?"
+      },
+      {
+        "key": "TW-Q2",
+        "text": "What inspired you to start making cinches?"
+      },
+      {
+        "key": "TW-Q3",
+        "text": "How did you figure out how to build a cinch from scratch?"
+      },
+      {
+        "key": "TW-Q4",
+        "text": "How did your background influence your interest in cowboy culture?"
+      },
+      {
+        "key": "TW-Q5",
+        "text": "What does being a cowboy mean to you?"
+      },
+      {
+        "key": "TW-Q6",
+        "text": "What do you love most about your current lifestyle?"
+      },
+      {
+        "key": "TW-Q7",
+        "text": "What makes mohair cinches better for horses?"
+      },
+      {
+        "key": "TW-Q8",
+        "text": "Do you make custom sized cinches for each customer?"
+      },
+      {
+        "key": "TW-Q9",
+        "text": "Has it been difficult getting to where you're at today?"
+      }
+    ]
+  },
+  "Keith Seidel": {
+    "id": "KS",
+    "questions": [
+      {
+        "key": "KS-Q1",
+        "text": "How did you first get into saddle making?"
+      },
+      {
+        "key": "KS-Q2",
+        "text": "What was it like growing up in Cody, Wyoming?"
+      },
+      {
+        "key": "KS-Q3",
+        "text": "How did you get your first job building saddles?"
+      },
+      {
+        "key": "KS-Q4",
+        "text": "What makes a good saddle builder stand out?"
+      },
+      {
+        "key": "KS-Q5",
+        "text": "What are the two sides of saddle making?"
+      },
+      {
+        "key": "KS-Q6",
+        "text": "What was it like starting a high-quality saddle business?"
+      },
+      {
+        "key": "KS-Q7",
+        "text": "How did the old Hollywood silver saddles influence you?"
+      },
+      {
+        "key": "KS-Q8",
+        "text": "What\u2019s your advice for young craftsmen trying to develop their style?"
+      },
+      {
+        "key": "KS-Q9",
+        "text": "What was your experience with guarded saddle shops when learning?"
+      },
+      {
+        "key": "KS-Q10",
+        "text": "How did you earn the trust of older craftsmen?"
+      },
+      {
+        "key": "KS-Q11",
+        "text": "Why have you decided to start teaching?"
+      },
+      {
+        "key": "KS-Q12",
+        "text": "What\u2019s the biggest threat to saddle making today?"
+      }
+    ]
+  },
+  "Jim Brainard": {
+    "id": "JB",
+    "questions": [
+      {
+        "key": "JB-Q1",
+        "text": "How did you get started in leatherwork?"
+      },
+      {
+        "key": "JB-Q2",
+        "text": "How did a visit to a shoe repair shop change your life?"
+      },
+      {
+        "key": "JB-Q3",
+        "text": "Who was Hutch, and how did you meet him?"
+      },
+      {
+        "key": "JB-Q4",
+        "text": "What was it like taking over Hutch\u2019s shop?"
+      },
+      {
+        "key": "JB-Q5",
+        "text": "How did secretiveness affect your learning as a young tradesman?"
+      },
+      {
+        "key": "JB-Q6",
+        "text": "Why do you focus more on connecting apprentices to masters, other than teaching?"
+      },
+      {
+        "key": "JB-Q7",
+        "text": "How much do materials cost for one pair of boots?"
+      },
+      {
+        "key": "JB-Q8",
+        "text": "What does cowboy culture mean to you?"
+      },
+      {
+        "key": "JB-Q9",
+        "text": "Will cowboy wear ever change?"
+      },
+      {
+        "key": "JB-Q10",
+        "text": "Couldn't somebody just learn leatherwork online?"
+      }
+    ]
+  },
+  "Ernie Marsh": {
+    "id": "EM",
+    "questions": [
+      {
+        "key": "EM-Q1",
+        "text": "How did you first get into making bits and spurs?"
+      },
+      {
+        "key": "EM-Q2",
+        "text": "What type of horseman do you provide gear for?"
+      },
+      {
+        "key": "EM-Q3",
+        "text": "When did you go to Elmer Miller's bit and spur making school?"
+      },
+      {
+        "key": "EM-Q4",
+        "text": "How were the beginnings of making bit and spurs your career?"
+      },
+      {
+        "key": "EM-Q5",
+        "text": "How did working with horses shape your understanding of gear?"
+      },
+      {
+        "key": "EM-Q6",
+        "text": "How do signal based ques help alongside your bridle bits?"
+      },
+      {
+        "key": "EM-Q7",
+        "text": "How do you find your creativity?"
+      },
+      {
+        "key": "EM-Q8",
+        "text": "What's the greatest reward in what you do?"
+      },
+      {
+        "key": "EM-Q9",
+        "text": "Have you ever made something that you are fully satisfied with?"
+      },
+      {
+        "key": "EM-Q10",
+        "text": "How do different parts of the country influence cowboy's gear and methods?"
+      },
+      {
+        "key": "EM-Q11",
+        "text": "Where did the \"cowboy\" originate?"
+      }
+    ]
+  }
+}

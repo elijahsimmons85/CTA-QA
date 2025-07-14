@@ -120,7 +120,7 @@ export default function ArtisanCard({
               onPress={onAskPress}
               activeOpacity={0.85}
             >
-              <Ionicons name="chatbubble-ellipses" size={34} color="#39505D" style={styles.buttonIcon} />
+              <Ionicons name="chatbubble-ellipses" size={42} color="#39505D" style={styles.buttonIcon} />
               <Text style={styles.askText}>Ask {artisan.name} a Question</Text>
             </TouchableOpacity>
           </View>
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   askButton: {
-    width: "60%",
+    width: "75%",
     height: "80%",
     backgroundColor: "#E1EDF0",
     borderColor: "#A0B8BD",
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   askText: {
-    fontSize: 38,
+    fontSize: 44,
     fontFamily: "FreightDisp-Bold",
     color: "#39505D",
     textAlign: "center",

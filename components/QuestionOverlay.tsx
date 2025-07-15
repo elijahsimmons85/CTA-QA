@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   questionItem: {
-    paddingVertical: 16,
+    paddingVertical: 25,
     borderBottomColor: "#D6CCC2",
     borderBottomWidth: 1,
   },
   questionText: {
-    fontSize: 22,
+    fontSize: 27,
     fontFamily: "AcuminPro-Regular",
     color: "#2C2B28",
   },

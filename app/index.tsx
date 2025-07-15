@@ -20,6 +20,7 @@ import ArtisanCard from "../components/ArtisanCard";
 import HiddenMaintenanceTrigger from "../components/HiddenMaintenanceTrigger";
 import QuestionOverlay from "@/components/QuestionOverlay";
 import questionsData from "@/assets/artisan_questions.json";
+import { StatusBar } from "expo-status-bar";
 
 export default function HomeScreen() {
   const ref = React.useRef<ICarouselInstance>(null);
@@ -53,6 +54,8 @@ const scrollEnabled = selectedArtisanName === null;
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden />
+
       {/* BACKGROUND */}
       {useGradientBackground ? (
         <LinearGradient
@@ -74,7 +77,7 @@ const scrollEnabled = selectedArtisanName === null;
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.77,
-          parallaxScrollingOffset: CARD_WIDTH * 0.2,
+          parallaxScrollingOffset: CARD_WIDTH * 0.27,
           parallaxAdjacentItemScale: 0.7,
         }}
         pagingEnabled
@@ -101,6 +104,7 @@ const scrollEnabled = selectedArtisanName === null;
           height: 20,
           backgroundColor: "#E0D7C8",
           borderRadius: 50,
+          marginBottom: 25
         }}
         activeDotStyle={{
           borderRadius: 100,

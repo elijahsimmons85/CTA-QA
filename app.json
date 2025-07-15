@@ -40,8 +40,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "f745f58b-c995-4d94-b5d9-dc6c48c328b2"
+        "projectId": "4d1813fc-642f-4293-a729-b3c0847bfed5"
       }
-    }
+    },
+    "owner": "elijahrsimmons"
   }
 }

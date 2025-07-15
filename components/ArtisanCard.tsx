@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   card: {
-    width: "107%",
-    height: "100%",
+    width: "95%",
+    height: "115%",
     backgroundColor: "#F8F5F0",
     overflow: "visible",
     shadowColor: "#000",
@@ -138,6 +138,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderBottomWidth: 1,
     borderColor: "#E9CBA7",
+    transform: [{ translateX: -0 }, { translateY: -0 }, { scale: 1 }],
+
   },
   portrait: {
     width: "100%",

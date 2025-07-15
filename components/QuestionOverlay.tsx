@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,8 @@ type Props = {
 
 const QuestionOverlay = ({ artisanName, onClose }: Props) => {
   const slideAnim = useSharedValue(1000);
+  const [isScrolling, setIsScrolling] = useState(false);
+
   const artisanQuestions =
     questionsData[artisanName as keyof typeof questionsData]?.questions ?? [];
 
@@ -42,7 +44,8 @@ const QuestionOverlay = ({ artisanName, onClose }: Props) => {
   };
 
   const handleQuestionPress = async (command: string) => {
-    const ip = (await AsyncStorage.getItem("museum_ip_address")) ?? "192.168.1.100";
+    const ip =
+      (await AsyncStorage.getItem("museum_ip_address")) ?? "192.168.1.100";
     const port = (await AsyncStorage.getItem("museum_port")) ?? "8080";
     await sendUdpCommand({ ip, port, message: command });
   };
@@ -51,8 +54,11 @@ const QuestionOverlay = ({ artisanName, onClose }: Props) => {
     <TouchableOpacity
       style={styles.questionItem}
       activeOpacity={0.8}
-      delayPressIn={150}
-      onPressOut={() => handleQuestionPress(item.key)}
+      onPress={() => {
+        if (!isScrolling) {
+          handleQuestionPress(item.key);
+        }
+      }}
     >
       <Text style={styles.questionText}>{item.text}</Text>
     </TouchableOpacity>
@@ -74,6 +80,8 @@ const QuestionOverlay = ({ artisanName, onClose }: Props) => {
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={16}
+          onScrollBeginDrag={() => setIsScrolling(true)}
+          onScrollEndDrag={() => setTimeout(() => setIsScrolling(false), 100)}
         />
       </Animated.View>
     </View>
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderTopWidth: 1,
     borderColor: "#9C8374",
+    borderRadius: 20,
   },
   backButton: {
     flexDirection: "row",

@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     fontFamily: "AcuminPro-Regular",
     color: "#39505D",
     textAlign: "center",
-    textTransform: "uppercase",
     letterSpacing: 1,
   },
   descriptionSection: {

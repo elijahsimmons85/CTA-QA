@@ -16,7 +16,8 @@
     },
     "adhoc": {
       "ios": {
-        "distribution": "internal"
+        "distribution": "internal",
+        "autoIncrement": true
       }
     }
   },

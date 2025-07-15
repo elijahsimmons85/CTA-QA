@@ -1,12 +1,9 @@
+import { sendUdpCommand } from "@/utils/sendUDPCommand";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 import React from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -19,113 +16,101 @@ type Artisan = {
   name: string;
   trade: string;
   portraitPath: string;
+  videoCommands?: {
+    bio?: string;
+    craft?: string;
+  };
 };
 
 type Props = {
   artisan: Artisan;
   index: number;
   animationValue: SharedValue<number>;
-  onAskPress: () => void;
+  onAskQuestion: (name: string) => void;
 };
 
 const portraitMap: Record<string, any> = {
   default: require("../assets/images/DefaultPortrait.png"),
-  // add portrait mappings here
+  "AErickson.png": require("../assets/images/Artisans/CTA_HS_AErickson.png"),
+  "BBriddle.png": require("../assets/images/Artisans/CTA_HS_BBriddle.png"),
+  "EMarsh.png": require("../assets/images/Artisans/CTA_HS_EMarsh.png"),
+  "JBrainard.png": require("../assets/images/Artisans/CTA_HS_JBrainard.png"),
+  "KSeidel.png": require("../assets/images/Artisans/CTA_HS_KSeidel.png"),
+  "TWatson.png": require("../assets/images/Artisans/CTA_HS_TWatson.png"),
 };
 
 const LAYOUT_CONFIG = {
-  portraitRatio: 0.65,
-  contentRatio: 0.35,
+  portraitRatio: 0.55,
+  contentRatio: 0.45,
   titleRatio: 0.4,
-  descriptionRatio: 0.2,
-  buttonsRatio: 0.4,
+  buttonsRatio: 0.3,
 };
 
-export default function ArtisanCard({
-  artisan,
-  animationValue,
-  onAskPress,
-}: Props) {
+export default function ArtisanCard({ artisan, index, animationValue, onAskQuestion }: Props) {
+  const router = useRouter();
+
+  const handlePress = () => {
+    // intentionally left empty
+  };
+
+  const handleVideoPress = async (videoType: "bio" | "craft") => {
+    const command = artisan.videoCommands?.[videoType];
+    if (!command) {
+      console.warn(`⚠️ No command configured for ${videoType} video.`);
+      return;
+    }
+
+    try {
+      const ip = (await AsyncStorage.getItem("museum_ip_address")) ?? "192.168.1.100";
+      const port = (await AsyncStorage.getItem("museum_port")) ?? "8080";
+
+      await sendUdpCommand({ ip, port, message: command });
+    } catch (err) {
+      console.error("❌ Failed to send UDP command:", err);
+    }
+  };
+
   const imageSource =
     artisan.portraitPath && portraitMap[artisan.portraitPath]
       ? portraitMap[artisan.portraitPath]
       : portraitMap["default"];
 
   const animatedStyle = useAnimatedStyle(() => {
-    const scale = interpolate(
-      animationValue.value,
-      [-1, 0, 1],
-      [0.9, 1, 0.9],
-      Extrapolate.CLAMP
-    );
-
-    return {
-      transform: [{ scale }],
-    };
+    const scale = interpolate(animationValue.value, [-1, 0, 1], [0.9, 1, 0.9], Extrapolate.CLAMP);
+    return { transform: [{ scale }] };
   });
 
   return (
     <Animated.View style={[styles.container, animatedStyle]}>
-      <View style={styles.card}>
-        <View style={styles.portraitDividerTop} />
-        <View
-          style={[
-            styles.portraitSection,
-            { height: `${LAYOUT_CONFIG.portraitRatio * 100}%` },
-          ]}
-        >
+      <TouchableOpacity style={styles.card} onPress={handlePress} activeOpacity={1}>
+        {/* Portrait */}
+        <View style={[styles.portraitSection, { height: `${LAYOUT_CONFIG.portraitRatio * 100}%` }]}>
           <Image source={imageSource} style={styles.portrait} resizeMode="cover" />
         </View>
-        <View style={styles.portraitDividerBottom} />
 
-        <View
-          style={[
-            styles.contentSection,
-            { height: `${LAYOUT_CONFIG.contentRatio * 100}%` },
-          ]}
-        >
-          <View
-            style={[
-              styles.titleSection,
-              { height: `${LAYOUT_CONFIG.titleRatio * 100}%` },
-            ]}
-          >
-            <Text
-              style={styles.name}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-            >
-              {artisan.name}
+        {/* Content */}
+        <View style={[styles.contentSection, { height: `${LAYOUT_CONFIG.contentRatio * 100}%` }]}>
+          <View style={[styles.titleSection, { height: `${LAYOUT_CONFIG.titleRatio * 100}%` }]}>
+            <Text style={styles.name} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
+              {artisan.name.toUpperCase()}
             </Text>
-            <View style={styles.divider} />
-            <Text
-              style={styles.trade}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.8}
-            >
+            <Text style={styles.trade} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>
               {artisan.trade}
             </Text>
           </View>
 
-          <View
-            style={[
-              styles.buttonSection,
-              { height: `${LAYOUT_CONFIG.buttonsRatio * 100}%` },
-            ]}
-          >
+          {/* Buttons */}
+          <View style={[styles.buttonSection, { height: `${LAYOUT_CONFIG.buttonsRatio * 100}%` }]}>
             <TouchableOpacity
-              style={[styles.videoButton, styles.askButton]}
-              onPress={onAskPress}
-              activeOpacity={0.85}
+              style={[styles.videoButton]}
+              onPress={() => onAskQuestion(artisan.name)}
+              activeOpacity={0.8}
             >
-              <Ionicons name="chatbubble-ellipses" size={42} color="#39505D" style={styles.buttonIcon} />
-              <Text style={styles.askText}>Ask {artisan.name} a Question</Text>
+              <Text style={styles.buttonText}>Ask {artisan.name.split(" ")[0]} a Question</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </Animated.View>
   );
 }
@@ -133,33 +118,20 @@ export default function ArtisanCard({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   card: {
-    width: "100%",
+    width: "107%",
     height: "100%",
     backgroundColor: "#F8F5F0",
-    borderWidth: 2,
-    borderColor: "#9C8374",
-    borderRadius: 16,
-    overflow: "hidden",
+    overflow: "visible",
     shadowColor: "#000",
     shadowOffset: { width: 4, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 19.84,
-  },
-  portraitDividerTop: {
-    height: 15,
-    width: "100%",
-    backgroundColor: "#C37E5D",
-  },
-  portraitDividerBottom: {
-    height: 15,
-    width: "100%",
-    backgroundColor: "#A0B8BD",
-    marginTop: -1,
+    shadowOpacity: 0.25,
+    shadowRadius: 30.84,
+    elevation: 10,
   },
   portraitSection: {
     width: "100%",
@@ -172,68 +144,78 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   contentSection: {
-    width: "100%",
+    width: "85%",
+    alignSelf: "center",
+    justifyContent: "center",
     paddingHorizontal: 24,
     paddingVertical: 16,
+    marginLeft: 20,
+    marginRight: 20,
     backgroundColor: "#F8F5F0",
   },
   titleSection: {
+    borderColor: "#8E7565",
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     overflow: "visible",
     marginBottom: 8,
+    padding: 15,
     minHeight: 130,
+    margin: 0,
   },
   name: {
-    fontSize: 76,
+    fontSize: 96,
     fontFamily: "FreightDisp-Bold",
     color: "#39505D",
     textAlign: "center",
     flexShrink: 1,
+    paddingHorizontal: 10,
     marginBottom: 4,
   },
   trade: {
-    fontSize: 36,
+    fontSize: 54,
     fontFamily: "AcuminPro-Regular",
     color: "#39505D",
     textAlign: "center",
     textTransform: "uppercase",
     letterSpacing: 1,
   },
-  divider: {
-    width: "30%",
-    height: 2,
-    backgroundColor: "#9C8374",
-    marginVertical: 6,
-    alignSelf: "center",
+  descriptionSection: {
+    paddingVertical: 8,
+    alignItems: "center",
+  },
+  description: {
+    fontSize: 16,
+    fontFamily: "AcuminPro-Regular",
+    color: "#2C2B28",
+    lineHeight: 22,
+    textAlign: "center",
   },
   buttonSection: {
-    alignItems: "center",
+    flexDirection: "row",
     justifyContent: "center",
+    gap: 12,
     marginTop: 16,
   },
   videoButton: {
+    marginHorizontal: 120,
+    height: "70%",
+    marginTop: 45,
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 12,
-    borderWidth: 1,
     paddingVertical: 14,
     paddingHorizontal: 24,
+    margin: 9,
+    backgroundColor: "#BA7F60",
+    position: "relative",
   },
-  askButton: {
-    width: "75%",
-    height: "80%",
-    backgroundColor: "#E1EDF0",
-    borderColor: "#A0B8BD",
-  },
-  buttonIcon: {
-    marginRight: 12,
-  },
-  askText: {
-    fontSize: 44,
-    fontFamily: "FreightDisp-Bold",
-    color: "#39505D",
+  buttonText: {
+    fontSize: 50,
+    fontFamily: "AcuminPro-Thin",
+    color: "#F8F5F0",
     textAlign: "center",
   },
 });

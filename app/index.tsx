@@ -7,6 +7,7 @@ import {
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 import Carousel, {
@@ -17,20 +18,23 @@ import Carousel, {
 import artisans from "../assets/artisans.json";
 import ArtisanCard from "../components/ArtisanCard";
 import HiddenMaintenanceTrigger from "../components/HiddenMaintenanceTrigger";
-import QuestionOverlay from "../components/QuestionOverlay";
+import QuestionOverlay from "@/components/QuestionOverlay";
+import questionsData from "@/assets/artisan_questions.json";
 
 export default function HomeScreen() {
   const ref = React.useRef<ICarouselInstance>(null);
   const { width, height } = Dimensions.get("window");
   const progress = useSharedValue<number>(0);
   const router = useRouter();
+ const [selectedArtisanName, setSelectedArtisanName] = useState<string | null>(null);
+const scrollEnabled = selectedArtisanName === null;
 
-  const [useGradientBackground, setUseGradientBackground] = useState(false);
-  const [selectedArtisan, setSelectedArtisan] = useState<any | null>(null);
 
-  const background = require("../assets/images/CTA_QA_Home_BG.png");
+  const [useGradientBackground, setUseGradientBackground] = useState(false); // ← toggle
+
+  const background = require("../assets/images/CTA_ipad_BG.png");
   const CARD_WIDTH = width;
-  const CARD_HEIGHT = height * 0.95;
+  const CARD_HEIGHT = height * 1;
 
   const onPressPagination = (index: number) => {
     ref.current?.scrollTo({
@@ -49,6 +53,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      {/* BACKGROUND */}
       {useGradientBackground ? (
         <LinearGradient
           colors={["#F8F5F0", "#D9C2AA"]}
@@ -57,7 +62,9 @@ export default function HomeScreen() {
       ) : (
         <Image source={background} style={styles.backgroundImage} />
       )}
+      <View style={styles.overlay} />
 
+      {/* CAROUSEL */}
       <Carousel
         ref={ref}
         data={artisans}
@@ -66,8 +73,8 @@ export default function HomeScreen() {
         style={{ width }}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.85,
-          parallaxScrollingOffset: CARD_WIDTH * 0.25,
+          parallaxScrollingScale: 0.77,
+          parallaxScrollingOffset: CARD_WIDTH * 0.2,
           parallaxAdjacentItemScale: 0.7,
         }}
         pagingEnabled
@@ -81,7 +88,7 @@ export default function HomeScreen() {
             artisan={item}
             index={index}
             animationValue={animationValue}
-            onAskPress={() => setSelectedArtisan(item)}
+            onAskQuestion={setSelectedArtisanName}
           />
         )}
       />
@@ -103,16 +110,15 @@ export default function HomeScreen() {
         onPress={onPressPagination}
       />
 
-      {selectedArtisan && (
-        <QuestionOverlay
-          artisan={selectedArtisan}
-          onClose={() => setSelectedArtisan(null)}
-        />
-      )}
-
       <HiddenMaintenanceTrigger
         onActivate={() => router.push("/maintenance")}
       />
+       {selectedArtisanName && (
+        <QuestionOverlay
+          artisanName={selectedArtisanName}
+          onClose={() => setSelectedArtisanName(null)}
+        />
+      )}
     </View>
   );
 }
@@ -125,7 +131,12 @@ const styles = StyleSheet.create({
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
     resizeMode: "cover",
-    transform: [{ translateX: -300 }, { translateY: -2000 }],
+    transform: [{ translateX: -700 }, { translateY: -350 }, { scale: 0.7 }],
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 0, 0, 0.0)", // adjust opacity as needed
+    zIndex: 0, // Ensure it sits above background but below content
   },
   toggleButton: {
     position: "absolute",

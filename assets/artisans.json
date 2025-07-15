@@ -2,9 +2,8 @@
   {
     "id": "1",
     "name": "Amy Erickson",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Bits, Spurs & Silver",
+    "portraitPath": "AErickson.png",
     "videoCommands": {
       "bio": "AE-BIO",
       "craft": "AE-WORK"
@@ -13,9 +12,8 @@
   {
     "id": "2",
     "name": "Brook Briddle",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Custom Hat Maker",
+    "portraitPath": "BBriddle.png",
     "videoCommands": {
       "bio": "BB-BIO",
       "craft": "BB-WORK"
@@ -24,9 +22,8 @@
     {
     "id": "3",
     "name": "Tia Watson",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Custom Cinch Maker",
+    "portraitPath": "TWatson.png",
     "videoCommands": {
       "bio": "TW-BIO",
       "craft": "TW-WORK"
@@ -35,9 +32,8 @@
   {
     "id": "4",
     "name": "Keith Seidel",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Saddle Maker & Leather Craftsman",
+    "portraitPath": "KSeidel.png",
     "videoCommands": {
       "bio": "KS-BIO",
       "craft": "KS-WORK"
@@ -46,9 +42,8 @@
   {
     "id": "5",
     "name": "Jim Brainard",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Custom Boot Maker",
+    "portraitPath": "JBrainard.png",
     "videoCommands": {
       "bio": "JB-BIO",
       "craft": "JB-WORK"
@@ -57,9 +52,8 @@
   {
     "id": "6",
     "name": "Ernie Marsh",
-    "trade": "Trade",
-    "portraitPath": "",
-    "description": "Possibly put brief description here",
+    "trade": "Bit & Spur Maker and Silversmith",
+    "portraitPath": "EMarsh.png",
     "videoCommands": {
       "bio": "EM-BIO",
       "craft": "EM-WORK"
